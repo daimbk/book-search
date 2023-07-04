@@ -1,11 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
 # get user input of book to check
 book = input("Enter book name: ").title()
 author = input("Enter author's full name: ").lower()
+print()
 
 # result page upon searching
 url = f'https://readings.com.pk/Pages/searchresult.aspx?Keyword={book}'
@@ -36,9 +38,35 @@ for div_element in div_elements:
     if book_author == author:
         book_links.append(link)
 
-print(book_links)
+# open result pages
+for page in book_links:
+    url = "https://readings.com.pk" + f"{page}"
+    driver.get(url)
+    # get new page html
+    html_content = driver.page_source
+    soup = BeautifulSoup(html_content, "html.parser")
 
-# print the current URL to verify if the search was successful
-# print(driver.current_url)
+    # search if book is available
+    try:
+        # book is available
+        available = driver.find_element(By.CLASS_NAME, "book_availability")
+        price = soup.find('div', class_='books_our_price').find(
+            'span', class_='linethrough').find_next_sibling('span')
+        price = price.text.strip()
+
+        print("Book is available.")
+        print(f"Price: {price}")
+
+        break  # end loop as book is available
+
+    except:
+        # book is not available
+        unavailable = driver.find_element(By.CLASS_NAME, "out_off_stock")
+        price = soup.find('div', class_='books_our_price').find(
+            'span', class_='linethrough').find_next_sibling('span')
+        price = price.text.strip()
+
+        print("Book is not available.")
+        print(f"Price: {price}")
 
 driver.quit()
