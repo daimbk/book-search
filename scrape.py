@@ -4,79 +4,86 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-# get user input of book to check
-book = input("Enter book name: ").title()
-author = input("Enter author's full name: ").lower()
-print("\nPlease wait while details are fetched")
 
-# result page upon searching
-url = f'https://readings.com.pk/Pages/searchresult.aspx?Keyword={book}'
+def check_book():
+    # get user input of book to check
+    book = input("Enter book name: ").title()
+    author = input("Enter author's full name: ").lower()
+    print("\nPlease wait while details are fetched")
 
-options = Options()
-options.add_argument("-headless")  # run Firefox in headless mode
-service = Service("geckodriver-v0.33.0-win64")  # path to gecko webdriver
-driver = webdriver.Firefox(service=service, options=options)
+    # result page upon searching
+    url = f'https://readings.com.pk/Pages/searchresult.aspx?Keyword={book}'
 
-driver.get(url)
-# get page html
-html_content = driver.page_source
+    options = Options()
+    options.add_argument("-headless")  # run Firefox in headless mode
+    service = Service("geckodriver-v0.33.0-win64")  # path to gecko webdriver
+    driver = webdriver.Firefox(service=service, options=options)
 
-# parse html with BeautifulSoup
-soup = BeautifulSoup(html_content, "html.parser")
-
-""" find and filter the list of results """
-# find the relevant <div> elements and extract information
-div_elements = soup.find_all(
-    'div', class_='product_detail_page_left_colum_author_name')
-
-book_links = []
-book_author = ""
-for div_element in div_elements:
-    link = div_element.find('h5').find('a')['href']  # link to book page
-    book_author = div_element.find('h6').text.strip()  # name of author
-
-    if book_author == author:
-        book_links.append(link)
-
-print("Displaying all versions of the book on website.")
-# open result pages
-for page in book_links:
-    print()  # newline
-    url = "https://readings.com.pk" + f"{page}"
     driver.get(url)
-    # get new page html
+    # get page html
     html_content = driver.page_source
+
+    # parse html with BeautifulSoup
     soup = BeautifulSoup(html_content, "html.parser")
 
-    # search if book is available
-    try:
-        # book is available
-        available = driver.find_element(By.CLASS_NAME, "book_availability")
+    """ find and filter the list of results """
+    # find the relevant <div> elements and extract information
+    div_elements = soup.find_all(
+        'div', class_='product_detail_page_left_colum_author_name')
 
-        title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
-            'h5').contents[0].strip()
+    book_links = []
+    book_author = ""
+    for div_element in div_elements:
+        link = div_element.find('h5').find('a')['href']  # link to book page
+        book_author = div_element.find('h6').text.strip()  # name of author
 
-        price = soup.find('div', class_='books_our_price').find(
-            'span', class_='linethrough').find_next_sibling('span')
-        price = price.text.strip()
+        if book_author == author:
+            book_links.append(link)
 
-        print("Book is available.")
-        print(f"Title: {title}")
-        print(f"Price: {price}")
+    # exit if no book is found
+    if len(book_links) == 0:
+        print("No books of such name found.")
+        return
 
-    except:
-        # book is not available
-        unavailable = driver.find_element(By.CLASS_NAME, "out_off_stock")
+    print("Displaying all versions of the book on website.")
+    # open result pages
+    for page in book_links:
+        print()  # newline
+        url = "https://readings.com.pk" + f"{page}"
+        driver.get(url)
+        # get new page html
+        html_content = driver.page_source
+        soup = BeautifulSoup(html_content, "html.parser")
 
-        title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
-            'h5').contents[0].strip()
+        # search if book is available
+        try:
+            # book is available
+            available = driver.find_element(By.CLASS_NAME, "book_availability")
 
-        price = soup.find('div', class_='books_our_price').find(
-            'span', class_='linethrough').find_next_sibling('span')
-        price = price.text.strip()
+            title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
+                'h5').contents[0].strip()
 
-        print("Out of Stock")
-        print(f"Title: {title}")
-        print(f"Price: {price}")
+            price = soup.find('div', class_='books_our_price').find(
+                'span', class_='linethrough').find_next_sibling('span')
+            price = price.text.strip()
 
-driver.quit()
+            print("Book is available.")
+            print(f"Title: {title}")
+            print(f"Price: {price}")
+
+        except:
+            # book is not available
+            unavailable = driver.find_element(By.CLASS_NAME, "out_off_stock")
+
+            title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
+                'h5').contents[0].strip()
+
+            price = soup.find('div', class_='books_our_price').find(
+                'span', class_='linethrough').find_next_sibling('span')
+            price = price.text.strip()
+
+            print("Out of Stock")
+            print(f"Title: {title}")
+            print(f"Price: {price}")
+
+    driver.quit()
