@@ -17,6 +17,7 @@ def open_link(link):
         browser = webdriver.Firefox()
         browser.maximize_window()
         browser.get(url)
+        print("\nReturn to this screen to continue.")
 
 
 def check_book():
