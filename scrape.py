@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 def check_book():
     # get user input of book to check
     book = input("Enter book name: ").title()
-    author = input("Enter author's full name: ").lower()
+    # author = input("Enter author's full name: ").lower()
     print("\nPlease wait while details are fetched")
 
     # result page upon searching
@@ -31,14 +31,17 @@ def check_book():
     div_elements = soup.find_all(
         'div', class_='product_detail_page_left_colum_author_name')
 
-    book_links = []
+    book_links = {}
     book_author = ""
     for div_element in div_elements:
+        title = div_element.find('h5').find(
+            'a').text.strip().title()  # name of book
         link = div_element.find('h5').find('a')['href']  # link to book page
-        book_author = div_element.find('h6').text.strip()  # name of author
+        book_author = div_element.find(
+            'h6').text.strip().title()  # name of author
 
-        if book_author == author:
-            book_links.append(link)
+        if title == book:
+            book_links[link] = book_author
 
     # exit if no book is found
     if len(book_links) == 0:
@@ -55,35 +58,36 @@ def check_book():
         html_content = driver.page_source
         soup = BeautifulSoup(html_content, "html.parser")
 
+        # get book details
+        title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
+            'h5').contents[0].strip()
+        price = soup.find('div', class_='books_our_price').find(
+            'span', class_='linethrough').find_next_sibling('span')
+        price = price.text.strip()
+
         # search if book is available
         try:
-            # book is available
-            available = driver.find_element(By.CLASS_NAME, "book_availability")
-
-            title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
-                'h5').contents[0].strip()
-
-            price = soup.find('div', class_='books_our_price').find(
-                'span', class_='linethrough').find_next_sibling('span')
-            price = price.text.strip()
-
+            driver.find_element(By.CLASS_NAME, "book_availability")
             print("Book is available.")
             print(f"Title: {title}")
+            print(f"Author: {book_links[page]}")
             print(f"Price: {price}")
 
         except:
-            # book is not available
-            unavailable = driver.find_element(By.CLASS_NAME, "out_off_stock")
+            try:
+                # check if book is out of stock
+                driver.find_element(By.CLASS_NAME, "out_off_stock")
+                print("Out of Stock")
+                print(f"Title: {title}")
+                print(f"Author: {book_links[page]}")
+                print(f"Price: {price}")
 
-            title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
-                'h5').contents[0].strip()
-
-            price = soup.find('div', class_='books_our_price').find(
-                'span', class_='linethrough').find_next_sibling('span')
-            price = price.text.strip()
-
-            print("Out of Stock")
-            print(f"Title: {title}")
-            print(f"Price: {price}")
+            except:
+                # check if available for pre-order
+                driver.find_element(By.CLASS_NAME, "pree_order")
+                print("Available for Pre-Order")
+                print(f"Title: {title}")
+                print(f"Author: {book_links[page]}")
+                print(f"Price: {price}")
 
     driver.quit()
