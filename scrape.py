@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 # get user input of book to check
 book = input("Enter book name: ").title()
 author = input("Enter author's full name: ").lower()
-print()
+print("\nPlease wait while details are fetched")
 
 # result page upon searching
 url = f'https://readings.com.pk/Pages/searchresult.aspx?Keyword={book}'
@@ -38,8 +38,10 @@ for div_element in div_elements:
     if book_author == author:
         book_links.append(link)
 
+print("Displaying all versions of the book on website.")
 # open result pages
 for page in book_links:
+    print()  # newline
     url = "https://readings.com.pk" + f"{page}"
     driver.get(url)
     # get new page html
@@ -50,23 +52,31 @@ for page in book_links:
     try:
         # book is available
         available = driver.find_element(By.CLASS_NAME, "book_availability")
+
+        title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
+            'h5').contents[0].strip()
+
         price = soup.find('div', class_='books_our_price').find(
             'span', class_='linethrough').find_next_sibling('span')
         price = price.text.strip()
 
         print("Book is available.")
+        print(f"Title: {title}")
         print(f"Price: {price}")
-
-        break  # end loop as book is available
 
     except:
         # book is not available
         unavailable = driver.find_element(By.CLASS_NAME, "out_off_stock")
+
+        title = soup.find('div', class_='books_detail_page_left_colum_author_name').find(
+            'h5').contents[0].strip()
+
         price = soup.find('div', class_='books_our_price').find(
             'span', class_='linethrough').find_next_sibling('span')
         price = price.text.strip()
 
-        print("Book is not available.")
+        print("Out of Stock")
+        print(f"Title: {title}")
         print(f"Price: {price}")
 
 driver.quit()
