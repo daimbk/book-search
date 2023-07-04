@@ -23,10 +23,10 @@ def check_again():
     while not exit:
         # check if user wants to check another book
         option = input("\nCheck another book? (Y/N): ").upper()
-        while option not in ('Y', 'N'):
+        while option not in ('Y', 'N', 'y', 'n'):
             option = input("Please enter correct option. Y or N: ").upper()
 
-        if option == 'Y':
+        if option == 'Y' or option == 'y':
             func_options()
         else:
             exit = True

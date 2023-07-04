@@ -5,6 +5,20 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
 
+def open_link(link):
+    """provide option to open the link to book"""
+
+    url = "https://readings.com.pk" + link
+    permission = input("Open the link to this book? (Y/N): ")
+    while permission not in ('Y', 'N', 'y', 'n'):
+        permission = input("Please enter correct option. Y or N: ").upper()
+
+    if permission == "Y" or permission == "y":
+        browser = webdriver.Firefox()
+        browser.maximize_window()
+        browser.get(url)
+
+
 def check_book():
     """search using only book title (cannot detect specific versions such as special editions)"""
     # get user input of book to check
@@ -69,26 +83,24 @@ def check_book():
         try:
             driver.find_element(By.CLASS_NAME, "book_availability")
             print("Book is available.")
-            print(f"Title: {title}")
-            print(f"Author: {book_links[page]}")
-            print(f"Price: {price}")
 
         except:
             try:
                 # check if book is out of stock
                 driver.find_element(By.CLASS_NAME, "out_off_stock")
                 print("Out of Stock")
-                print(f"Title: {title}")
-                print(f"Author: {book_links[page]}")
-                print(f"Price: {price}")
 
             except:
                 # check if available for pre-order
                 driver.find_element(By.CLASS_NAME, "pree_order")
                 print("Available for Pre-Order")
-                print(f"Title: {title}")
-                print(f"Author: {book_links[page]}")
-                print(f"Price: {price}")
+
+        print(f"Title: {title}")
+        print(f"Author: {book_links[page]}")
+        print(f"Price: {price}")
+
+        # provide option to open link in browser
+        open_link(page)
 
     driver.quit()
 
@@ -159,25 +171,23 @@ def check_book_author():
         try:
             driver.find_element(By.CLASS_NAME, "book_availability")
             print("Book is available.")
-            print(f"Title: {title}")
-            print(f"Author: {book_links[page]}")
-            print(f"Price: {price}")
 
         except:
             try:
                 # check if book is out of stock
                 driver.find_element(By.CLASS_NAME, "out_off_stock")
                 print("Out of Stock")
-                print(f"Title: {title}")
-                print(f"Author: {book_links[page]}")
-                print(f"Price: {price}")
 
             except:
                 # check if available for pre-order
                 driver.find_element(By.CLASS_NAME, "pree_order")
                 print("Available for Pre-Order")
-                print(f"Title: {title}")
-                print(f"Author: {book_links[page]}")
-                print(f"Price: {price}")
+
+        print(f"Title: {title}")
+        print(f"Author: {book_links[page]}")
+        print(f"Price: {price}")
+
+        # provide option to open link in browser
+        open_link(page)
 
     driver.quit()
