@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 
 def check_book():
+    """search using only book title (cannot detect specific versions such as special editions)"""
     # get user input of book to check
     book = input("Enter book name: ").title()
     print("\nPlease wait while details are fetched")
@@ -93,6 +94,8 @@ def check_book():
 
 
 def check_book_author():
+    """search using book title and author (more precise)"""
+
     # get user input of book to check
     book = input("Enter book name: ").title()
     author = input("Enter author's full name: ").title()
