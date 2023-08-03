@@ -19,24 +19,13 @@ The website houses items in 3 states which the scraper checks and conveys accord
 - ### Selenium:
   Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install selenium`
   
-  The webdriver primarily used to do the work was imported from selenium. The browser is navigated in headless mode, that is, it    does not open the browser window except when the user is presented with the option to open the link to the results of the found   books.
+  The webdriver used in selenium is used to open the links to the books found in Firefox if chosen by user.
   </br>
-  
-  ```python
-  options = Options()
-  options.add_argument("-headless")  # run Firefox in headless mode
-  service = Service("geckodriver-v0.33.0-win64")  # path to gecko webdriver
-  driver = webdriver.Firefox(service=service, options=options)
-  ```
 
 - ### BeautifulSoup:
   Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install beautifulsoup4`
   
   BeautifulSoup is an html parser which is used to find specific html and extract the data in the tags.
-  </br>
-  ```python
-  from bs4 import BeautifulSoup
-  ```
   </br>
   
   ```python
