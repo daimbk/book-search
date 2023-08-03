@@ -180,3 +180,7 @@ def check_book_author():
 
         # provide option to open link in browser
         open_link(page)
+
+
+if __name__ == "__main__":
+    check_book_author()
