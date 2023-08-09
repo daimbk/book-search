@@ -1,26 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-
-def open_link(link):
-    """provide option to open the link to book"""
-
-    url = "https://readings.com.pk" + link
-    permission = input("Open the link to this book? (Y/N): ")
-    while permission not in ('Y', 'N', 'y', 'n'):
-        permission = input("Please enter correct option. Y or N: ").upper()
-
-    if permission == "Y" or permission == "y":
-        browser = webdriver.Firefox()
-        browser.maximize_window()
-        browser.get(url)
-        print("\nReturn to this screen to continue.")
 
 
-def check_book():
+def check_book(book):
     """search using only book title (cannot detect specific versions such as special editions)"""
     # get user input of book to check
-    book = input("Enter book name: ").title()
+    book = book.title()
     print("\nPlease wait while details are fetched")
 
     # result page upon searching
@@ -55,11 +40,12 @@ def check_book():
         return
 
     print("Displaying all versions of the book on website.")
+    
+    book_info = []
     # open result pages
     for page in book_links:
         print()  # newline
         url = "https://readings.com.pk" + f"{page}"
-
         # fetch the new page content
         response = requests.get(url)
         if response.status_code != 200:
@@ -91,19 +77,21 @@ def check_book():
                 if pre_order_elements:
                     print("Available for Pre-Order")
 
-        print(f"Title: {title}")
-        print(f"Author: {book_links[page]}")
-        print(f"Price: {price}")
+        book_dic = {"Title": title,
+                    "Author": book_links[page],
+                    "Price": price,
+                    "Link": url}
+        
+        book_info.append(book_dic)
+    
+    return book_info
 
-        # provide option to open link in browser
-        open_link(page)
 
-
-def check_book_author():
+def check_book_author(book, author):
     """search using book title and author (more precise)"""
     # get user input of book to check
-    book = input("Enter book name: ").title()
-    author = input("Enter author's full name: ").title()
+    book = book.title()
+    author = author.title()
     print("\nPlease wait while details are fetched")
 
     # result page upon searching
@@ -114,10 +102,9 @@ def check_book_author():
     if response.status_code != 200:
         print("Error fetching data from the website.")
         return
-
+    
     # parse html with BeautifulSoup
     soup = BeautifulSoup(response.text, "html.parser")
-
     """ find and filter the list of results """
     # find the relevant <div> elements and extract information
     div_elements = soup.find_all('div', class_='product_detail_page_left_colum_author_name')
@@ -132,12 +119,16 @@ def check_book_author():
         if book_author == author:
             book_links[link] = book_author
 
+    
     # exit if no book is found
     if len(book_links) == 0:
         print("No books of such name found.")
         return
-
+    
     print("Displaying all versions of the book on website.")
+
+    book_info = []
+
     # open result pages
     for page in book_links:
         print()  # newline
@@ -145,13 +136,14 @@ def check_book_author():
 
         # Fetch the new page content
         response = requests.get(url)
+        
         if response.status_code != 200:
             print("Error fetching data from the website.")
             continue
+        
 
         # parse the new page with BeautifulSoup
         soup = BeautifulSoup(response.text, "html.parser")
-
         # get book details
         title = soup.find('div', class_='books_detail_page_left_colum_author_name').find('h5').contents[0].strip()
         price = soup.find('div', class_='books_our_price').find('span', class_='linethrough').find_next_sibling('span')
@@ -174,9 +166,25 @@ def check_book_author():
                 if pre_order_elements:
                     print("Available for Pre-Order")
 
-        print(f"Title: {title}")
-        print(f"Author: {book_links[page]}")
-        print(f"Price: {price}")
-
+        book_dic = {"Title": title,
+                    "Author": book_links[page],
+                    "Price": price,
+                    "Link": "https://readings.com.pk" + page}
+        
+        book_info.append(book_dic)
+    
+        
         # provide option to open link in browser
-        open_link(page)
+        # open_link(page)
+
+    return book_info
+
+
+def func_options(book, author):
+    if author == "":    
+        # call scraping script to check book availability using book title
+        return check_book(book.title())
+
+    else:
+        # search using author name and book title
+        return check_book_author(book.title(), author.title())
