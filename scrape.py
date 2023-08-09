@@ -6,7 +6,6 @@ def check_book(book):
     """search using only book title (cannot detect specific versions such as special editions)"""
     # get user input of book to check
     book = book.title()
-    print("\nPlease wait while details are fetched")
 
     # result page upon searching
     url = f'https://readings.com.pk/Pages/searchresult.aspx?Keyword={book}'
@@ -42,8 +41,6 @@ def check_book(book):
         print("No books of such name found.")
         return
 
-    print("Displaying all versions of the book on website.")
-
     book_info = []
     # open result pages
     for page in book_links:
@@ -69,7 +66,7 @@ def check_book(book):
         availability_elements = soup.find_all(class_='book_availability')
         availability = ""
         if availability_elements:
-            availability = "Book is available."
+            availability = "Available"
 
         else:
             # check if book is out of stock
@@ -86,8 +83,8 @@ def check_book(book):
         book_dic = {"Title": title,
                     "Author": book_links[page],
                     "Price": price,
-                    "Link": url}
-        # implement Availability column in book_dic using availability var
+                    "Link": url,
+                    "Availability": availability}
 
         book_info.append(book_dic)
 
@@ -99,7 +96,6 @@ def check_book_author(book, author):
     # get user input of book to check
     book = book.title()
     author = author.title()
-    print("\nPlease wait while details are fetched")
 
     # result page upon searching
     url = f'https://readings.com.pk/Pages/searchresult.aspx?Keyword={book}'
@@ -134,8 +130,6 @@ def check_book_author(book, author):
         print("No books of such name found.")
         return
 
-    print("Displaying all versions of the book on website.")
-
     book_info = []
 
     # open result pages
@@ -163,7 +157,7 @@ def check_book_author(book, author):
         availability_elements = soup.find_all(class_='book_availability')
         availability = ""
         if availability_elements:
-            availability = "Book is available."
+            availability = "Available"
 
         else:
             # check if book is out of stock
@@ -180,13 +174,10 @@ def check_book_author(book, author):
         book_dic = {"Title": title,
                     "Author": book_links[page],
                     "Price": price,
-                    "Link": "https://readings.com.pk" + page}
-        # implement Availability column in book_dic using availability var
+                    "Link": "https://readings.com.pk" + page,
+                    "Availability": availability}
 
         book_info.append(book_dic)
-
-        # provide option to open link in browser
-        # open_link(page)
 
     return book_info
 
