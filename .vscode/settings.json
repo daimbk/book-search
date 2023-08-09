@@ -4,6 +4,8 @@
     },
     "python.formatting.provider": "none",
     "cSpell.words": [
-        "geckodriver"
+        "geckodriver",
+        "linethrough",
+        "pree"
     ]
 }

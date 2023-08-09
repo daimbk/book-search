@@ -8,19 +8,6 @@ The website houses items in 3 states which the scraper checks and conveys accord
 - Pre-Order
 
 ## Dependencies
-- ### GeckoDriver
-  Mozilla Firefox was chosen as the browser for the working of this program so geckodriver is used to work the webdriver imported   from selenium with the browser.
-  </br></br>
-  Repository link&nbsp;:&nbsp;[geckodriver](https://github.com/mozilla/geckodriver/releases/tag/v0.33.0)
-  </br></br>
-  ```python
-  service = Service("geckodriver-v0.33.0-win64")  # path to gecko webdriver
-  ```
-- ### Selenium:
-  Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install selenium`
-  
-  The webdriver used in selenium is used to open the links to the books found in Firefox if chosen by user.
-  </br>
 
 - ### BeautifulSoup:
   Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install beautifulsoup4`
@@ -36,6 +23,11 @@ The website houses items in 3 states which the scraper checks and conveys accord
   title = soup.find('div', class_='books_detail_page_left_colum_author_name').find('h5').contents[0].strip()
   price = soup.find('div', class_='books_our_price').find('span', class_='linethrough').find_next_sibling('span')
   ```
+
+- ### PyQt5:
+  Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install PyQt5`
+  
+  It is used to make the GUI of the program.
 
 ## Search Options
 
