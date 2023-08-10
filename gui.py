@@ -15,7 +15,7 @@ font_style1 = 'font: 18pt "Exo"; font-weight: bold;'
 
 rounded_button_style = (
     f"background-color: {button_color}; color: {fg_color1}; {font_style}"
-    "border-radius: 20px;"
+    "border-radius: 14px;"
     "padding: 10px 20px;"
 )
 

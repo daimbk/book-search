@@ -14,15 +14,6 @@ The website houses items in 3 states which the scraper checks and conveys accord
   
   BeautifulSoup is an html parser which is used to find specific html and extract the data in the tags.
   </br>
-  
-  ```python
-  # declare BeautifulSoup object passing webpage html to it
-  soup = BeautifulSoup(html_content, "html.parser")
-
-  # finding required elements such as book title and price
-  title = soup.find('div', class_='books_detail_page_left_colum_author_name').find('h5').contents[0].strip()
-  price = soup.find('div', class_='books_our_price').find('span', class_='linethrough').find_next_sibling('span')
-  ```
 
 - ### PyQt5:
   Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install PyQt5`
@@ -42,7 +33,7 @@ The website houses items in 3 states which the scraper checks and conveys accord
 
 ## Working Executable Images
 <p align = "center">
-  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/a0fb901e-5f5e-4a79-953a-069d0c52ef1f" width="750" height="350" border="15"/>
-  </br>
-  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/68e735de-8c44-45c6-9d35-b470855b68eb" width="750" height="350" border="15"/>
+  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/44104576-258b-43a5-8138-6108cea42b2b" width="400" height="300" border="15"/>
+  </br></br>
+  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/95c330ed-224c-4fb6-baa7-73dd83fa94f4" width="800" height="300" border="15"/>
 </p>
