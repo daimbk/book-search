@@ -33,7 +33,7 @@ def check_book(book):
         book_author = div_element.find(
             'h6').text.strip().title()  # name of author
 
-        if title == book:
+        if book in title:
             book_links[link] = book_author
 
     # exit if no book is found
@@ -122,7 +122,7 @@ def check_book_author(book, author):
         book_author = div_element.find(
             'h6').text.strip().title()  # name of author
 
-        if book_author == author:
+        if author in book_author:
             book_links[link] = book_author
 
     # exit if no book is found

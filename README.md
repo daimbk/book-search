@@ -23,13 +23,11 @@ The website houses items in 3 states which the scraper checks and conveys accord
 ## Search Options
 
 - ### Option 1: search using book title only
-  The user enters the book title only using which the parser finds relevent results. This version of search is less accurate than   the second option (explained further in option 2).
+  The user enters the book title only using which the parser finds relevant results. This version of search is less accurate than the second version as it can provide results of many authors having that title words in their books.
   </br>
 
 - ### Option 2: search using author name and book title
-  User provides the book title and the author's full name. The book title opens the search page with that title name and the        author name is matched with the results to find all displayed results of that author. This is more precise as it can find         results with unique names such as:</br>
-  + Special Editions
-  + Hardcover Edition etc.
+  User provides the book title and the author's name. The book title opens the search page with that title name and the        author name is matched with the results to find all displayed results of that author. This is more precise as it can narrow down the book to that of a particular author.</br>
 
 ## Working Executable Images
 <p align = "center">
