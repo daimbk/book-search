@@ -31,7 +31,7 @@ The website houses items in 3 states which the scraper checks and conveys accord
 
 ## Working Executable Images
 <p align = "center">
-  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/44104576-258b-43a5-8138-6108cea42b2b" width="400" height="300" border="15"/>
+  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/44104576-258b-43a5-8138-6108cea42b2b" width="400" height="300"/>
   </br></br>
-  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/95c330ed-224c-4fb6-baa7-73dd83fa94f4" width="800" height="300" border="15"/>
+  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/95c330ed-224c-4fb6-baa7-73dd83fa94f4" width="800" height="300"/>
 </p>
