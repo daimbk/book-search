@@ -5,9 +5,27 @@ const Form = ({ onSearch }) => {
   const [bookName, setBookName] = useState("");
   const [author, setAuthor] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSearch({ bookName, author });
+
+    try {
+      const response = await fetch("http://localhost:5000/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ bookName, author }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      onSearch(data.result);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
