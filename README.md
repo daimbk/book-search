@@ -1,37 +1,43 @@
 # Book Availability Checker using Web Scraping
 
-The program created using python scripts gets the title or title/author from the user and scrapes the bookstore website [Readings](https://www.readings.com.pk/) to check if it is available.
-</br>
-The website houses items in 3 states which the scraper checks and conveys accordingly:
-- Available
-- Out of Stock
-- Pre-Order
+The Book Availability Checker is an application built using React for the frontend and Flask for the backend. It allows users to check the availability of books on the [Readings](https://www.readings.com.pk/) bookstore website through web scraping.
 
-## Dependencies
+## Features
 
-- ### BeautifulSoup:
-  Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install beautifulsoup4`
-  
-  BeautifulSoup is an html parser which is used to find specific html and extract the data in the tags.
-  </br>
+- **Search Options:**
+  - Users can search for book availability using either the book title or both the book title and author's name.
+  - Two search options are available for more flexibility.
 
-- ### PyQt5:
-  Installation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip install PyQt5`
-  
-  It is used to make the GUI of the program.
+- **(TBD) Real-time Results:**
+  - The application displays result windows for each book as soon as the availability information is fetched, providing a real-time experience.
 
-## Search Options
+## Frontend (React)
 
-- ### Option 1: search using book title only
-  The user enters the book title only using which the parser finds relevant results. This version of search is less accurate than the second version as it can provide results of many authors having that title words in their books.
-  </br>
+The frontend of the application is developed using React.
 
-- ### Option 2: search using author name and book title
-  User provides the book title and the author's name. The book title opens the search page with that title name and the        author name is matched with the results to find all displayed results of that author. This is more precise as it can narrow down the book to that of a particular author.</br>
+## Backend (Flask)
 
-## Working Executable Images
-<p align = "center">
-  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/44104576-258b-43a5-8138-6108cea42b2b" width="400" height="300"/>
-  </br></br>
-  <img src="https://github.com/daimbk/bookstore-notif/assets/51926730/95c330ed-224c-4fb6-baa7-73dd83fa94f4" width="800" height="300"/>
-</p>
+The backend of the application is built using Flask, a lightweight Python web framework. It handles the web scraping logic and communicates with the frontend. Key aspects include:
+
+- **Web Scraping:**
+  - Utilizes BeautifulSoup for parsing HTML and extracting relevant information from the Readings website.
+  - Checks the availability status of each book.
+
+- **Flask API:**
+  - Exposes a `/search` endpoint for handling search requests from the React frontend.
+  - Sends back search results in real-time as each book's availability is determined.
+
+## How to Run
+
+1. **Install Dependencies:**
+   - In the root directory, run `npm install` to install React dependencies.
+   - In the `backend` directory, install Flask dependencies with `pip install -r requirements.txt`.
+
+2. **Run the Applications:**
+   - Start the React app by running `npm start` in the `root` directory.
+   - Run the Flask backend with `python app.py` in the `backend` directory.
+
+3. **Access the App:**
+   - Open your browser and go to `http://localhost:3000` to use the Book Availability Checker.
+
+Feel free to explore the application, search for your favorite books, and check their availability in real-time!
