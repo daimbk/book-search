@@ -29,25 +29,28 @@ const Form = ({ onSearch }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Book Name
-        <input
-          type="text"
-          value={bookName}
-          onChange={(e) => setBookName(e.target.value)}
-        />
-      </label>
-      <label>
-        Author
-        <input
-          type="text"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
-      </label>
-      <button type="submit">Search</button>
-    </form>
+    <div>
+      <h2>Book Availability Checker</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Book Name
+          <input
+            type="text"
+            value={bookName}
+            onChange={(e) => setBookName(e.target.value)}
+          />
+        </label>
+        <label>
+          Author
+          <input
+            type="text"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+          />
+        </label>
+        <button type="submit">Search</button>
+      </form>
+    </div>
   );
 };
 
