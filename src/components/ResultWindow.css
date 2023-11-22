@@ -16,7 +16,7 @@
 }
 
 .result-window a {
-  color: #007bff;
+  color: #d83f31;
   text-decoration: none;
   display: block;
   margin-top: 10px;
@@ -24,4 +24,8 @@
 
 .result-window a:hover {
   text-decoration: underline;
+}
+
+.result-window a:active {
+  color: #a81b0e;
 }
