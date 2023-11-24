@@ -8,8 +8,8 @@ The Book Availability Checker is an application built using React for the fronte
   - Users can search for book availability using either the book title or both the book title and author's name.
   - Two search options are available for more flexibility.
 
-- **(TBD) Real-time Results:**
-  - The application displays result windows for each book as soon as the availability information is fetched, providing a real-time experience.
+- **Result Information:**
+  - The application displays result windows for each book containing Book Title, Author, Price, Availability, and the link to the storepage for that item.
 
 ## Frontend (React)
 
